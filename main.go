@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"time"
 )
 
 func main() {
@@ -17,17 +16,16 @@ func main() {
 
 	board := NewBoard(int(width), int(height), false)
 
-	fmt.Print("\033[?25l")
-	fmt.Print("\033[2J")
+	fmt.Print("\033[?25l") // Disable cursor
+	fmt.Print("\033[2J")   // Clear terminal
 
 	for i := 0; true; i++ {
 
-		fmt.Printf("\033[%d;%dH", 0, 0)
+		fmt.Printf("\033[%d;%dH", 0, 0) // Set cursor position
 		fmt.Printf("Génération : %v", i)
 		board.DrawBoard()
-		time.Sleep(time.Millisecond * 50)
-		board = board.ComputeNextGeneration()
+		board.cells = *board.ComputeNextGeneration()
 	}
 
-	fmt.Print("\033[?25h")
+	fmt.Print("\033[?25h") // Enable cursor
 }

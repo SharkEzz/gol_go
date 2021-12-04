@@ -71,24 +71,25 @@ func (b *Board) AliveNeighbors(x int, y int) uint {
 	return alive
 }
 
-func (b *Board) ComputeNextGeneration() *Board {
+func (b *Board) ComputeNextGeneration() *[][]uint {
 	currentBoard := b
-	newBoard := NewBoard(b.width, b.height, true)
+	newBoard := make([][]uint, b.height)
 
 	for y := 0; y < currentBoard.height; y++ {
+		newBoard[y] = make([]uint, b.width)
 		for x := 0; x < currentBoard.width; x++ {
 			currentCell := b.cells[y][x]
 			neighbors := b.AliveNeighbors(x, y)
 
 			if currentCell == 1 && (neighbors < 2 || neighbors > 3) {
-				newBoard.cells[y][x] = 0
+				newBoard[y][x] = 0
 			} else if currentCell == 0 && neighbors == 3 {
-				newBoard.cells[y][x] = 1
+				newBoard[y][x] = 1
 			} else {
-				newBoard.cells[y][x] = currentBoard.cells[y][x]
+				newBoard[y][x] = currentBoard.cells[y][x]
 			}
 		}
 	}
 
-	return newBoard
+	return &newBoard
 }
