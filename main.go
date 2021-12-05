@@ -23,7 +23,7 @@ func main() {
 	for i := 0; true; i++ {
 
 		fmt.Printf("\033[%d;%dH", 0, 0) // Set cursor position
-		fmt.Printf("Génération : %v", i)
+		fmt.Printf("Génération : %v\n", i)
 		board.DrawBoard()
 		board.cells = *board.ComputeNextGeneration()
 		time.Sleep(time.Millisecond * time.Duration(sleepTime))
